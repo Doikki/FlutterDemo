@@ -1,30 +1,36 @@
 import 'package:fish_redux/fish_redux.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_app/main.dart';
 
 import 'state.dart';
 
 Widget buildView(ItemState state, Dispatch dispatch, ViewService viewService) {
-  return _bodyWidget(state);
+  return _bodyWidget(state, dispatch, viewService.context);
 }
 
-Widget _bodyWidget(ItemState state) {
-  return Card(
-    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-    elevation: 5,
-    margin: _edgeInsetsGeometry(state.index, state.total),
-    child: Row(
-      children: [
-        Container(
-          margin: EdgeInsets.all(10),
-          width: 80,
-          height: 60,
-          child: Image.network(
-            state.itemDetail.envelopePic,
-            fit: BoxFit.fill,
+Widget _bodyWidget(ItemState state, Dispatch dispatch, BuildContext context) {
+  return GestureDetector(
+    onTap: () {
+      Navigator.pushNamed(context, RouteConfig.listPage);
+    },
+    child: Card(
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+      elevation: 5,
+      margin: _edgeInsetsGeometry(state.index, state.total),
+      child: Row(
+        children: [
+          Container(
+            margin: EdgeInsets.all(10),
+            width: 80,
+            height: 60,
+            child: Image.network(
+              state.itemDetail.envelopePic,
+              fit: BoxFit.fill,
+            ),
           ),
-        ),
-        _rightContent(state),
-      ],
+          _rightContent(state),
+        ],
+      ),
     ),
   );
 }
